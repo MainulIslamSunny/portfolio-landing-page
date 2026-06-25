@@ -2,7 +2,7 @@
 
 > A professional, bento-grid personal portfolio built with **Next.js 14**, **TypeScript**, and **TailwindCSS**. Features live GitHub API data, a working contact form, animated tiles, and one-click deployment to Vercel.
 
-**Live demo →** 
+**Live demo →** https://portfolio-landing-page-peach.vercel.app/
 
 ---
 
