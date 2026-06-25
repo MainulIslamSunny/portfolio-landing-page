@@ -106,27 +106,6 @@ cd mainul-portfolio
 npm install
 ```
 
-### 3. Set up environment variables
-
-```bash
-cp .env.local.example .env.local
-```
-
-Open `.env.local` and fill in your values:
-
-```env
-# Get a free API key at https://resend.com to enable contact form emails
-RESEND_API_KEY=re_xxxxxxxxxxxxxxxxxxxxxxxx
-
-# The email address where contact form submissions will be sent to
-CONTACT_TO_EMAIL=s.m.sunny97@gmail.com
-
-# Optional: GitHub Personal Access Token — increases rate limit from 60 to 5000 req/hr
-# Create one at https://github.com/settings/tokens (no special scopes needed)
-GITHUB_TOKEN=ghp_xxxxxxxxxxxxxxxxxxxxxxxx
-```
-
-> The site runs fine without any keys in development mode. The contact form logs to console instead of sending email, and the GitHub API works within the default 60 req/hr rate limit.
 
 ### 4. Start the development server
 
@@ -134,7 +113,6 @@ GITHUB_TOKEN=ghp_xxxxxxxxxxxxxxxxxxxxxxxx
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) in your browser.
 
 ---
 
