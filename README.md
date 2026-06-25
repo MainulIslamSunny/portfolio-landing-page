@@ -1,140 +1,41 @@
-# Mainul Islam — Next.js Portfolio
+# Mainul Islam — Developer Portfolio
 
-A professional bento-grid portfolio built with **Next.js 14 (App Router)**, **TypeScript**, **TailwindCSS**, and **Framer Motion**. Features live GitHub API data, a working contact form (via Resend), and ISR caching.
+> A professional, bento-grid personal portfolio built with **Next.js 14**, **TypeScript**, and **TailwindCSS**. Features live GitHub API data, a working contact form, animated tiles, and one-click deployment to Vercel.
 
----
-
-## ⚡ Step-by-Step Setup in VS Code
-
-### Prerequisites (install once)
-
-| Tool | Download |
-|------|----------|
-| **Node.js 18+** | https://nodejs.org (choose LTS) |
-| **VS Code** | https://code.visualstudio.com |
-| **Git** | https://git-scm.com |
+**Live demo →** 
 
 ---
 
-### Step 1 — Open the project in VS Code
+## ✨ Features
 
-1. Unzip the downloaded `mainul-portfolio.zip`
-2. Open VS Code
-3. Go to **File → Open Folder…**
-4. Select the `mainul-portfolio` folder → click **Open**
-
----
-
-### Step 2 — Open the terminal in VS Code
-
-Press `` Ctrl + ` `` (backtick) or go to **Terminal → New Terminal**
-
-You should see a terminal at the bottom of VS Code pointing to your project folder.
-
----
-
-### Step 3 — Install dependencies
-
-Run this command in the terminal:
-
-```bash
-npm install
-```
-
-Wait for it to finish (takes ~30–60 seconds the first time).
+- **Bento grid layout** — responsive 12-column card layout that adapts to any screen size
+- **Live GitHub stats** — repos, followers, stars, forks, and language breakdown fetched server-side via GitHub API
+- **Live contribution graph** — 12-month activity graph pulled in real time
+- **Working contact form** — sends emails via [Resend](https://resend.com) with a branded HTML template
+- **Typewriter animation** — rotating role titles with smooth type/delete loop
+- **Scroll progress bar** — thin gradient bar tracks reading position
+- **Animated tiles** — scroll-triggered fade-up on every card with mouse-tracking glow effect
+- **Spinning border profile card** — conic-gradient CSS animation on the main profile tile
+- **Copy email / direct mailto** — one-click email copy with toast notification
+- **ISR caching** — GitHub data revalidated every hour; no stale data, no slow loads
+- **SEO ready** — Open Graph, Twitter Card, meta description, and `robots` tags in layout
+- **TypeScript throughout** — fully typed, no `any`
+- **Zero layout shift** — fonts loaded via `next/font`, GitHub data fetched server-side
 
 ---
 
-### Step 4 — Set up environment variables
+## 🛠️ Tech Stack
 
-In the terminal, copy the example env file:
-
-```bash
-# Windows
-copy .env.local.example .env.local
-
-# Mac / Linux
-cp .env.local.example .env.local
-```
-
-Then open `.env.local` in VS Code and fill in your values:
-
-```env
-# Optional: get a free API key at https://resend.com to enable contact form emails
-RESEND_API_KEY=re_your_key_here
-
-# Your email address where contact form messages will arrive
-CONTACT_TO_EMAIL=s.m.sunny97@gmail.com
-
-# Optional: add a GitHub Personal Access Token to avoid rate limits (60 req/hr → 5000 req/hr)
-# Get one at https://github.com/settings/tokens (no special permissions needed)
-GITHUB_TOKEN=ghp_your_token_here
-```
-
-> **Note:** The site works without these — the contact form logs to console in dev mode, and GitHub API works without a token (60 req/hr limit).
-
----
-
-### Step 5 — Run the development server
-
-```bash
-npm run dev
-```
-
-You'll see:
-
-```
-▲ Next.js 14.x.x
-- Local:        http://localhost:3000
-- Ready in Xs
-```
-
-Open your browser and go to **http://localhost:3000** 🎉
-
----
-
-### Step 6 — Customise your content
-
-Open `lib/data.ts` — **this is the only file you need to edit** to update your portfolio content.
-
-Change your name, links, projects, experience, skills, etc. The page hot-reloads automatically.
-
-```ts
-export const PROFILE = {
-  name: "Mainul Islam",         // ← your name
-  email: "s.m.sunny97@gmail.com", // ← your email
-  cvUrl: "https://...",         // ← link to your CV PDF
-  // ...
-};
-```
-
----
-
-## 🚀 Deploy to Vercel (Free — takes 5 minutes)
-
-### Step 1 — Push to GitHub
-
-```bash
-git init
-git add .
-git commit -m "Initial portfolio"
-git branch -M main
-git remote add origin https://github.com/YOUR_USERNAME/YOUR_REPO.git
-git push -u origin main
-```
-
-### Step 2 — Deploy on Vercel
-
-1. Go to https://vercel.com and sign in with GitHub
-2. Click **"Add New Project"**
-3. Import your GitHub repository
-4. Under **Environment Variables**, add:
-   - `RESEND_API_KEY` → your Resend key
-   - `CONTACT_TO_EMAIL` → your email
-   - `GITHUB_TOKEN` → your GitHub PAT (optional but recommended)
-5. Click **Deploy** ✅
-
-Your portfolio is live at `https://your-project.vercel.app` 🎉
+| Layer | Technology |
+|---|---|
+| Framework | Next.js 14 (App Router) |
+| Language | TypeScript 5 |
+| Styling | TailwindCSS 3 |
+| Animation | Framer Motion 11 |
+| Icons | Lucide React |
+| Email | Resend |
+| Fonts | Plus Jakarta Sans · JetBrains Mono (Google Fonts via `next/font`) |
+| Deployment | Vercel |
 
 ---
 
@@ -142,85 +43,189 @@ Your portfolio is live at `https://your-project.vercel.app` 🎉
 
 ```
 mainul-portfolio/
+│
 ├── app/
 │   ├── api/
-│   │   ├── github/route.ts      # GitHub data API endpoint
-│   │   └── contact/route.ts     # Contact form email endpoint
-│   ├── globals.css              # Global styles & animations
-│   ├── layout.tsx               # Root layout with fonts & metadata
-│   └── page.tsx                 # Main page (server component)
+│   │   ├── github/route.ts       # GET — returns live GitHub stats (ISR cached)
+│   │   └── contact/route.ts      # POST — sends contact form email via Resend
+│   ├── globals.css               # Global styles, CSS animations, custom properties
+│   ├── layout.tsx                # Root layout — fonts, metadata, SEO tags
+│   └── page.tsx                  # Home page (server component, fetches GitHub at build)
 │
 ├── components/
-│   ├── sections/                # Each bento tile
-│   │   ├── ProfileTile.tsx
-│   │   ├── GitHubTile.tsx
-│   │   ├── SkillsTile.tsx
-│   │   ├── ExperienceTile.tsx
-│   │   ├── ProjectsTile.tsx
-│   │   ├── ContribTile.tsx
-│   │   ├── ReposTile.tsx
-│   │   ├── EducationTile.tsx
-│   │   ├── AwardsTile.tsx
-│   │   └── ContactTile.tsx
-│   └── ui/                      # Reusable UI primitives
-│       ├── Tile.tsx             # Animated bento tile wrapper
-│       ├── Label.tsx            # Section label
-│       ├── ScrollProgress.tsx   # Top progress bar
-│       └── Toast.tsx            # Toast notifications
+│   ├── sections/                 # One component per bento tile
+│   │   ├── ProfileTile.tsx       # Avatar, name, typewriter, metrics, social links
+│   │   ├── GitHubTile.tsx        # Live stat counters + language bars (client)
+│   │   ├── SkillsTile.tsx        # Categorised skill pills
+│   │   ├── ExperienceTile.tsx    # Timeline with impact bullets
+│   │   ├── ProjectsTile.tsx      # Featured + grid project cards
+│   │   ├── ContribTile.tsx       # GitHub contribution heatmap image
+│   │   ├── ReposTile.tsx         # Live recent repos from GitHub API
+│   │   ├── EducationTile.tsx     # University, CGPA, key modules
+│   │   ├── AwardsTile.tsx        # Awards and recognitions
+│   │   └── ContactTile.tsx       # Contact form + email actions (client)
+│   │
+│   └── ui/                       # Reusable primitives
+│       ├── Tile.tsx              # Animated bento tile wrapper (scroll + mouse glow)
+│       ├── Label.tsx             # Section label with leading line
+│       ├── ScrollProgress.tsx    # Top-of-page reading progress bar
+│       └── Toast.tsx             # Toast notification context + provider
 │
 ├── lib/
-│   ├── data.ts                  # ★ ALL your content lives here
-│   ├── github.ts                # GitHub API fetcher (server-side)
-│   └── utils.ts                 # Helpers (cn, relTime, getLangColor)
+│   ├── data.ts                   # ⭐ ALL content lives here — edit to customise
+│   ├── github.ts                 # Server-side GitHub API fetcher with ISR
+│   └── utils.ts                  # cn(), relTime(), getLangColor()
 │
-├── public/                      # Static files (add cv.pdf here)
-├── .env.local.example           # Copy to .env.local and fill in
-├── next.config.js
-├── tailwind.config.ts
+├── public/                       # Static assets — drop your cv.pdf here
+├── .env.local.example            # Environment variable template
+├── next.config.js                # Image domains config
+├── tailwind.config.ts            # Theme tokens (colors, fonts, animations)
+├── tsconfig.json
 └── package.json
 ```
 
 ---
 
-## 🔧 Common Commands
+## 🚀 Getting Started
 
-| Command | What it does |
-|---------|-------------|
-| `npm run dev` | Start local dev server at http://localhost:3000 |
-| `npm run build` | Build for production (checks for errors) |
-| `npm run start` | Run the production build locally |
-| `npm run lint` | Check for code issues |
+### Prerequisites
 
----
+- [Node.js 18+](https://nodejs.org) — download the LTS version
+- [Git](https://git-scm.com)
 
-## 💡 Next Steps (Level Up)
-
-1. **Add your photo** — Replace the `MI` initials in `ProfileTile.tsx` with a real `<Image>` tag
-2. **Host your CV** — Put `cv.pdf` in the `/public` folder, then set `cvUrl: "/cv.pdf"` in `lib/data.ts`
-3. **Add a blog** — Create `app/blog/page.tsx` and write MDX posts with `next-mdx-remote`
-4. **Custom domain** — In Vercel dashboard → Settings → Domains → add your domain
-5. **Analytics** — Add `@vercel/analytics` for free visitor stats
-
----
-
-## 🛠 VS Code Recommended Extensions
-
-Install these for the best experience:
-
-- **ESLint** (`dbaeumer.vscode-eslint`)
-- **Tailwind CSS IntelliSense** (`bradlc.vscode-tailwindcss`)
-- **Prettier** (`esbenp.prettier-vscode`)
-- **TypeScript** (built-in)
-- **Auto Rename Tag** (`formulahendry.auto-rename-tag`)
-
-Install them from the Extensions panel (Ctrl+Shift+X) or run:
+### 1. Clone the repository
 
 ```bash
-code --install-extension bradlc.vscode-tailwindcss
-code --install-extension dbaeumer.vscode-eslint
-code --install-extension esbenp.prettier-vscode
+git clone https://github.com/MainulIslamSunny/mainul-portfolio.git
+cd mainul-portfolio
 ```
+
+### 2. Install dependencies
+
+```bash
+npm install
+```
+
+### 3. Set up environment variables
+
+```bash
+cp .env.local.example .env.local
+```
+
+Open `.env.local` and fill in your values:
+
+```env
+# Get a free API key at https://resend.com to enable contact form emails
+RESEND_API_KEY=re_xxxxxxxxxxxxxxxxxxxxxxxx
+
+# The email address where contact form submissions will be sent to
+CONTACT_TO_EMAIL=s.m.sunny97@gmail.com
+
+# Optional: GitHub Personal Access Token — increases rate limit from 60 to 5000 req/hr
+# Create one at https://github.com/settings/tokens (no special scopes needed)
+GITHUB_TOKEN=ghp_xxxxxxxxxxxxxxxxxxxxxxxx
+```
+
+> The site runs fine without any keys in development mode. The contact form logs to console instead of sending email, and the GitHub API works within the default 60 req/hr rate limit.
+
+### 4. Start the development server
+
+```bash
+npm run dev
+```
+
+Open [http://localhost:3000](http://localhost:3000) in your browser.
 
 ---
 
-Built with ♥ by Mainul Islam
+## ✏️ Customisation
+
+**Everything you need to update lives in one file: `lib/data.ts`**
+
+Open it and edit your name, email, GitHub username, LinkedIn, projects, experience, skills, education, and awards. The page hot-reloads instantly on every save — no restart needed.
+
+```ts
+// lib/data.ts
+
+export const PROFILE = {
+  name: "Your Name",
+  email: "you@email.com",
+  githubUsername: "yourusername",
+  linkedin: "https://linkedin.com/in/yourprofile",
+  cvUrl: "/cv.pdf",           // put cv.pdf inside /public
+  // ...
+};
+```
+
+To add your CV: drop a `cv.pdf` file into the `/public` folder, then set `cvUrl: "/cv.pdf"` in `lib/data.ts`.
+
+---
+
+## 🌐 Deploying to Vercel
+
+### 1. Push to GitHub
+
+```bash
+git add .
+git commit -m "Initial commit"
+git branch -M main
+git remote add origin https://github.com/YOUR_USERNAME/YOUR_REPO.git
+git push -u origin main
+```
+
+### 2. Deploy on Vercel
+
+1. Go to [vercel.com](https://vercel.com) and sign in with GitHub
+2. Click **Add New Project** → import your repository
+3. Under **Environment Variables**, add:
+   - `RESEND_API_KEY`
+   - `CONTACT_TO_EMAIL`
+   - `GITHUB_TOKEN` (optional)
+4. Click **Deploy**
+
+Your portfolio goes live at `https://your-project.vercel.app` ✅
+
+To connect a custom domain: Vercel Dashboard → Settings → Domains → Add your domain.
+
+---
+
+## 📜 Available Scripts
+
+| Command | Description |
+|---|---|
+| `npm run dev` | Start local dev server at http://localhost:3000 |
+| `npm run build` | Build for production and check for errors |
+| `npm run start` | Serve the production build locally |
+| `npm run lint` | Run ESLint across the project |
+
+---
+
+## 🗺️ Roadmap
+
+- [ ] Add profile photo (replace `MI` initials with `<Image>`)
+- [ ] Blog section with MDX posts (`next-mdx-remote`)
+- [ ] Dark/light mode toggle
+- [ ] Vercel Analytics integration
+- [ ] Add project screenshots / demo GIFs to project cards
+- [ ] Playwright end-to-end tests
+
+---
+
+## 📄 License
+
+This project is open source under the [MIT License](LICENSE). You are free to use it as a template for your own portfolio — just replace the content with your own.
+
+---
+
+## 🤝 Connect
+
+**Mainul Islam** — Full Stack Developer, Dhaka, Bangladesh
+
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://linkedin.com/in/mainulislam188478)
+[![GitHub](https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/MainulIslamSunny)
+[![Portfolio](https://img.shields.io/badge/Portfolio-6382FF?style=for-the-badge&logo=vercel&logoColor=white)](https://portfolio-mainul.vercel.app)
+[![Email](https://img.shields.io/badge/Email-EA4335?style=for-the-badge&logo=gmail&logoColor=white)](mailto:s.m.sunny97@gmail.com)
+
+---
+
+<p align="center">Built with Next.js · Deployed on Vercel</p>
